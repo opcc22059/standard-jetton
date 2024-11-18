@@ -30,6 +30,8 @@ export async function run() {
     )
   );
 
+  console.log("minter raw address: ", minter.address.toRawString())
+
   // exit if contract is already deployed
   console.log("contract address:", minter.address.toString());
   if (await client.isContractDeployed(minter.address)) {

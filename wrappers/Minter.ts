@@ -30,4 +30,17 @@ export default class Minter implements Contract {
       bounce: false
     });
   }
+
+  async sendUpdateContent(provider: ContractProvider, via: Sender, queryId: number, content: string, value: string) {
+    const messageBody = beginCell()
+      .storeUint(4, 32) // op 
+      .storeUint(queryId, 64) // query id
+      .storeRef(encodeOffChainContent(content))
+      .endCell();
+    
+    await provider.internal(via, {
+      value,
+      body: messageBody
+    });
+  }
 }
