@@ -12,6 +12,8 @@
 #include "imports/discovery-params.fc";
 #pragma version >=0.2.0;
 
+const int MAX_SUPPLY = 100 * 100000000 * 1000000000;
+
 (int, slice, cell, cell) load_data() inline {
     slice ds = get_data().begin_parse();
     return (
@@ -75,6 +77,7 @@
         slice master_msg_cs = master_msg.begin_parse();
         master_msg_cs~skip_bits(32 + 64); ;; op + query_id
         int jetton_amount = master_msg_cs~load_coins();
+        throw_unless(76, total_supply + jetton_amount <= MAX_SUPPLY);
         mint_tokens(to_address, jetton_wallet_code, amount, master_msg);
         save_data(total_supply + jetton_amount, admin_address, content, jetton_wallet_code);
         return ();
