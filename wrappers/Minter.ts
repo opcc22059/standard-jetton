@@ -1,7 +1,5 @@
-import { Contract, ContractProvider, Sender, Address, Cell, contractAddress, beginCell, Slice, TupleItemSlice, TupleItemInt, Dictionary } from "@ton/core";
-import { MINTER_OP_UPDATE_CODE_AND_DATA, MINTER_OP_UPDATE_CONTENT, MINTER_OP_UPDATE_PRICE, MINTER_OP_UPDATE_PRICE_INC, MINTER_OP_UPDATE_PROXY_WHITELIST } from "./minter/opcodes";
+import { Contract, ContractProvider, Sender, Address, Cell, contractAddress, beginCell } from "@ton/core";
 import { encodeOffChainContent } from "../libs/cells";
-import { COMMON_OP_STAKE, COMMON_OP_UPDATE_ADMIN } from "./common/opcodes";
 
 export default class Minter implements Contract {
 
@@ -13,8 +11,8 @@ export default class Minter implements Contract {
     return beginCell()
       .storeCoins(0)
       .storeAddress(adminAddress)
-      .storeCell(encodeOffChainContent(content))
-      .storeCell(jettonWalletCode)
+      .storeRef(encodeOffChainContent(content))
+      .storeRef(jettonWalletCode)
       .endCell();
   }
 
