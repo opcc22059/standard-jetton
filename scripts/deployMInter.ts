@@ -42,8 +42,8 @@ export async function run() {
   const seqno = await walletContract.getSeqno();
 
   // send the deploy transaction
-  const utonicContract = client.open(utonic);
-  await utonicContract.sendDeploy(walletSender);
+  const minterContract = client.open(minter);
+  await minterContract.sendDeploy(walletSender);
 
   // wait until confirmed
   let currentSeqno = seqno;
