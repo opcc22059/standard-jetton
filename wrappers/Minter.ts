@@ -44,7 +44,7 @@ export default class Minter implements Contract {
     });
   }
 
-  async sendMint(provider: ContractProvider, via: Sender, queryId: number, fwdValue: bigint, jettonAmount: bigint, to: Address, value: string) {
+  async sendMint(provider: ContractProvider, via: Sender, queryId: number, fwdValue: bigint, jettonAmount: bigint, to: Address, fromAddress: Address, value: string) {
     const messageBody = beginCell()
       .storeUint(21, 32) // op 
       .storeUint(queryId, 64) // query id
@@ -55,6 +55,10 @@ export default class Minter implements Contract {
             .storeUint(0x178d4519, 32)
             .storeUint(queryId, 64)
             .storeCoins(jettonAmount)
+            .storeAddress(fromAddress)
+            .storeAddress(fromAddress)
+            .storeCoins(0)
+            .storeUint(1, 2)
         .endCell()
       )
       .endCell();

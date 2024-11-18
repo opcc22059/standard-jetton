@@ -25,7 +25,7 @@ export async function run() {
     minterCode,
     Minter.initData(
         Address.parse(config.admin_address),
-        "Quack",
+        "QuackInitContent",
         walletCode
     )
   );
