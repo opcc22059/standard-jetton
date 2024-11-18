@@ -43,4 +43,25 @@ export default class Minter implements Contract {
       body: messageBody
     });
   }
+
+  async sendMint(provider: ContractProvider, via: Sender, queryId: number, fwdValue: bigint, jettonAmount: bigint, to: Address, value: string) {
+    const messageBody = beginCell()
+      .storeUint(21, 32) // op 
+      .storeUint(queryId, 64) // query id
+      .storeAddress(to)
+      .storeCoins(fwdValue)
+      .storeRef(
+        beginCell()
+            .storeUint(0x178d4519, 32)
+            .storeUint(queryId, 64)
+            .storeCoins(jettonAmount)
+        .endCell()
+      )
+      .endCell();
+    
+    await provider.internal(via, {
+      value,
+      body: messageBody
+    });
+  }
 }
