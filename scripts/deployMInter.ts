@@ -19,8 +19,8 @@ export async function run() {
   const wallet = WalletContractV4.create({ publicKey: key.publicKey, workchain: 0 });
 
   // prepare minter's initial code and data cells for deployment
-  const minterCode = Cell.fromBoc(fs.readFileSync("build-cell/jetton-minter.cell"))[0];
-  const walletCode = Cell.fromBoc(fs.readFileSync("build-cell/jetton-wallet.cell"))[0];
+  const minterCode = Cell.fromBoc(fs.readFileSync("build/jetton-minter.cell"))[0];
+  const walletCode = Cell.fromBoc(fs.readFileSync("build/jetton-wallet.cell"))[0];
   const minter = Minter.createForDeploy(
     minterCode,
     Minter.initData(
